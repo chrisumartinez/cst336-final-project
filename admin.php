@@ -33,7 +33,6 @@ function verifyInput(){
         echo "Wrong Username or password";
      } else {
                $_SESSION['username'] = $record['username'];
-               $_SESSION['adminName'] = $record['firstName'] . "  " . $record['lastName'];
                header("Location: adminIndex.php"); //redirecting to adminIndex.php
             }
 }

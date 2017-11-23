@@ -17,12 +17,25 @@ function displayInfo(){
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    
+    echo ' <table class="table table-striped table table-inverse">
+    <thead align = "left">
+      <tr>
+        <th>Name</th>
+        <th>Album</th>
+        <th>Genre</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>';
     foreach($records as $record){
-        echo $record["name"] . " " . $record["title"] . " " . $record["genre"] . "<br>";
-        echo "[<a href='updateInfo.php?album_id=".$record["album_id"]."'> Update </a>] <br />";
-        echo "[<a onclick='return confirmDelete()'href='deleteInfo.php?album_id=".$record["album_id"]."'> Delete </a>] <br />";
+      echo '<tr>';
+      echo  "<td>" . $record["name"] . "<td>" . $record["title"] . "<td>" . $record["genre"] . "<td>" . "[<a href='updateInfo.php?album_id=".$record["album_id"]."'> Update </a>]"
+       . "<td>" . "[<a onclick='return confirmDelete()'href='deleteInfo.php?album_id=".$record["album_id"]."'> Delete </a>]";
+      echo '</tr>';
     }
+    echo '</tbody>';
+    echo '</table>';
 }
 
 

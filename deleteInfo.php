@@ -8,9 +8,5 @@
             
     $stmt = $conn->prepare($sql);
     $stmt -> execute();
-    
-    
-    
-    
     header("Location: adminIndex.php");
 ?>
