@@ -1,10 +1,8 @@
 <?php
+session_start();
 
 include 'database.php';
 $conn = getDatabaseConnection();
-
-
-
 
 function displayTable(){
     if (isset($_POST["sort"])){
