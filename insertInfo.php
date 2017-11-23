@@ -6,15 +6,41 @@ if (!isset($_SESSION['username'])) {  //checks whether the admin is logged in
 include 'database.php';
 $conn = getDatabaseConnection();
 
-
-function insertInfo(){
-    $artist_name = $_POST["artist_name"];
+if(isset($_POST["add_info"])){
+        $artist_name = $_POST["artist_name"];
     $album_title = $_POST["album_title"];
     $genre = $_POST["genre"];
     $year = $_POST["year"];
     $song_count = $_POST["song_count"];
     $artist_id = $_POST["artist_id"];
+    $album_id = $_POST["album_id"];
     
+    
+    //INSERT INTO MULTIPLE TABLES USING TRANSACTIONS:
+    $sql = "BEGIN;
+            INSERT INTO artist 
+                (artist_id, name, genre)
+            VALUES
+                (:artist_id, :name, :genre);
+            INSERT INTO albums
+                (album_id, title,artist_id,song_count,year)
+            VALUES
+                (:album_id,:title,:artist_id,:song_count,:year);
+            COMMIT;";
+            
+    $np = array();
+    $np[":artist_id"] = $artist_id;
+    $np[":name"] = $artist_name;
+    $np[":genre"] = $genre;
+    $np[":album_id"] = $album_id;
+    $np[":title"] = $album_title;
+    $np[":song_count"] = $song_count;
+    $np[":year"] = $year;
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($np);
+    
+    echo 'Info was Added!';
     
 }
 
@@ -62,7 +88,11 @@ function insertInfo(){
         <br>
         <input type = "text" id = "artist_id" name = "artist_id" required />
         <br>
-        <input type = "submit" value = "Submit" />
+        Album ID:
+        <br>
+        <input type = "text" id = "album_id" name  = "album_id" required />
+        <br>
+        <input type = "submit" value = "Submit" name = "add_info" />
         
     </form>
     </body>
