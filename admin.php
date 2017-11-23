@@ -1,6 +1,10 @@
 <?php
 session_start();
 include 'database.php';
+if (isset($_SESSION['username'])) {  //checks whether the admin is logged in
+    header("Location: adminIndex.php");
+}
+
 $conn = getDatabaseConnection();
 
 
