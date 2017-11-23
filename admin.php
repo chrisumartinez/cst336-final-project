@@ -1,13 +1,50 @@
-<?php 
+<?php
+session_start();
+
+include 'database.php';
+$conn = getDatabaseConnection();
 
 
+if(isset($_POST["username"])){
+    if(isset($_POST["password"])){
+        $username = $_POST["username"];
+        $password = $_POST["password"];
+        verifyInput($username, $password);
+    }
+}
+
+function verifyInput($username, $password){
+    global $conn;
+    $hashedPass = sha1($password);
+    
+    $sql = "SELECT *
+            FROM admins
+            WHERE username = :username 
+            AND password = :password";
+            
+    echo "<br>" . $sql . "<br>";        
+            
+    $np = array();
+    $np[':username'] = $username;
+    $np[':password'] = $hashedPass;
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute($np);
+    $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    
+    
+    if (empty($record)) {
+        echo "Wrong Username or password";
+     } else {
+               $_SESSION['username'] = $record['username'];
+               $_SESSION['adminName'] = $record['firstName'] . "  " . $record['lastName'];
+               header("Location: adminIndex.php"); //redirecting to adminIndex.php
+                
+            }
+}
 
 ?>
-
-
-
-
-
 <!DOCTYPE html>
 <html>
     <title>
@@ -23,12 +60,12 @@
 </div
 
     <body>
-        <form>
+        <form method = "post">
             Username:
-            <input type = "text" name = "username" />
+            <input type = "text" name = "username"  required/>
             <br>
             Password:
-            <input type = "text" name  = "password" />
+            <input type = "text" name  = "password" required />
             <br>
             <input type  = "submit" name  = "submit" />
         </form>
