@@ -1,6 +1,5 @@
 body{
-    background-image: url(../img/wallpaper.jpg);
-    background-repeat: no-repeat;
+    background-image: url(../img/wall.svg); 
     background-size:cover;
 }
 
@@ -27,9 +26,19 @@ body{
     background-color: #ddd;
     color: black;
 }
-
-/* Add a color to the active/current link */
-.topnav a.active {
-    background-color: #4CAF50;
+table,td {
+   border: 1px solid black;
+   text-align:left;
+   padding: 15px;
+   border-bottom: 1px solid #ddd;
+}
+thead{
+    background-color: black;
     color: white;
+    text-align:center;
+}
+
+#btn-group{
+    text-align:center;
+    width:100%;
 }

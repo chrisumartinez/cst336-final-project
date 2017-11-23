@@ -1,7 +1,71 @@
 <?php
 
+include 'database.php';
+$conn = getDatabaseConnection();
 
 
+
+
+function displayTable(){
+    if (isset($_POST["sort"])){
+        $param = $_POST["sort"];
+        showAllRecords($param);
+    }
+}
+
+
+
+/*
+show all the records and albums of artists.
+*/
+function showAllRecords($param){
+    global $conn;
+    
+    
+    //get correct syntax for searching:
+    if($param == "album"){
+        $param = "albums.title";
+    }
+    else{
+        if($param == "genre"){
+            $param == "genre";
+        }
+        else{
+             $param = "name";
+        }
+       
+    }
+    
+    
+    $sql = "SELECT *
+            FROM artist
+            INNER JOIN albums ON albums.artist_id=artist.artist_id
+            ORDER BY " . $param;
+            
+        
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $records = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
+    echo '<br>';
+    
+    echo ' <table class="table table-striped">
+    <thead align = "left">
+      <tr>
+        <th>Name</th>
+        <th>Album</th>
+        <th>Genre</th>
+      </tr>
+    </thead>
+    <tbody>';
+    foreach($records as $record){
+        echo '<tr>';
+      echo  "<td>" . $record["name"] . "<td>" . $record["title"] . "<td>" . $record["genre"];
+      echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+}
 ?>
 
 
@@ -20,8 +84,19 @@
 </div
 
     <body>
-    <div id = "userlist"
-    
+    <form method = "post">
+        <div class="btn-group" id = "btn-group" role="group" aria-label="Basic example" >
+        <br>
+        <input type = "submit" name = "sort" value = "artist" />
+         <input type = "submit" name = "sort" value = "genre" />
+          <input type = "submit" name = "sort" value = "album" />
+        
+</div>
+        
+    </form>
+
+    <div id = "userlist">
+        <?=displayTable()?>
     </div>
     </body>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
