@@ -42,3 +42,9 @@ thead{
     text-align:center;
     width:100%;
 }
+
+#logout{
+    text-align:center;
+    background-color:red;
+    color:white;
+}

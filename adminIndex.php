@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['username'])) {  //checks whether the admin is logged in
+    header("Location: index.php");
+}
+
+
 
 ?>
 
@@ -17,7 +22,9 @@ session_start();
   <a href="index.php">Home</a>
   <a href="user.php">Users</a>
   <a href="admin.php">Admins</a>
-</div
+  <a href="logout.php"style="float:right !important">Logout</a>
+    
+</div>
 
     <body>
     ADMININDEX PAGE
