@@ -28,7 +28,7 @@ function displayInfo(){
     <tbody>';
     foreach($records as $record){
       echo '<tr>';
-      echo  "<td>" . $record["name"] . "<td>" . $record["title"] . "<td>" . $record["genre"] . "<td>" . "[<a href='updateInfo.php?album_id=".$record["album_id"]."'> Update </a>]"
+      echo  "<td>" . $record["name"] . "<td>" . $record["title"] . "<td>" . $record["genre"] . "<td>" . "[<a href='updateInfo.php?album_id=".$record["album_id"]."&artist_id=".$record["artist_id"] . "'> Update </a>]"
        . "<td>" . "[<a onclick='return confirmDelete()'href='deleteInfo.php?album_id=".$record["album_id"]."'> Delete </a>]";
       echo '</tr>';
     }

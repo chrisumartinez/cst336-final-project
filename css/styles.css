@@ -48,6 +48,13 @@ thead{
     background-color:red;
     color:white;
 }
-#form_insert{
+#form_insert, #updateInfo{
     text-align:center;
+}
+h1{
+    text-align: center;
+}
+
+#pass, #generateReport{
+    text-align: center;
 }

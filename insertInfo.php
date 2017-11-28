@@ -7,40 +7,63 @@ include 'database.php';
 $conn = getDatabaseConnection();
 
 if(isset($_POST["add_info"])){
-        $artist_name = $_POST["artist_name"];
+    global $conn;
+    
+    //get auto_increment:
+    $sql = "SELECT `AUTO_INCREMENT`
+FROM  INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'final_project'
+AND   TABLE_NAME   = 'artist';";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $artistIncrement = $stmt->fetch();
+    $artist_id = $artistIncrement["AUTO_INCREMENT"];
+    
+    $sql = "SELECT `AUTO_INCREMENT`
+FROM  INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'final_project'
+AND   TABLE_NAME   = 'albums';";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $albumIncrement = $stmt->fetch();
+    $album_id = $albumIncrement["AUTO_INCREMENT"];
+    
+    
+    
+    $artist_name = $_POST["artist_name"];
     $album_title = $_POST["album_title"];
     $genre = $_POST["genre"];
     $year = $_POST["year"];
     $song_count = $_POST["song_count"];
-    $artist_id = $_POST["artist_id"];
-    $album_id = $_POST["album_id"];
     
     
     //INSERT INTO MULTIPLE TABLES USING TRANSACTIONS:
     $sql = "BEGIN;
             INSERT INTO artist 
-                (artist_id, name, genre)
+                (artist_id,name, genre)
             VALUES
-                (:artist_id, :name, :genre);
+                (:artist_id,:name, :genre);
             INSERT INTO albums
-                (album_id, title,artist_id,song_count,year)
+                (album_id,title,song_count,year,artist_id)
             VALUES
-                (:album_id,:title,:artist_id,:song_count,:year);
+                (:album_id,:title,:song_count,:year,:artist_id);
             COMMIT;";
             
     $np = array();
-    $np[":artist_id"] = $artist_id;
     $np[":name"] = $artist_name;
     $np[":genre"] = $genre;
-    $np[":album_id"] = $album_id;
     $np[":title"] = $album_title;
     $np[":song_count"] = $song_count;
     $np[":year"] = $year;
+    $np[":album_id"] = $album_id;
+    $np["artist_id"] = $artist_id;
     
     $stmt = $conn->prepare($sql);
-    $stmt->execute($np);
+   $stmt->execute($np);
+   
     
     echo 'Info was Added!';
+  header("Location: adminIndex.php");
     
 }
 
@@ -83,14 +106,6 @@ if(isset($_POST["add_info"])){
         Song Count:
         <br>
         <input type = "text" id = "song_count" name = "song_count" required />
-        <br>
-        Artist ID:
-        <br>
-        <input type = "text" id = "artist_id" name = "artist_id" required />
-        <br>
-        Album ID:
-        <br>
-        <input type = "text" id = "album_id" name  = "album_id" required />
         <br>
         <input type = "submit" value = "Submit" name = "add_info" />
         
