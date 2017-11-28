@@ -57,9 +57,37 @@ function getAlbums(){
 }
 
 function getAwards(){
-    
+    global $conn;
+    $sql = "SELECT *
+            FROM awards
+            INNER JOIN artist ON awards.artist_id=artist.artist_id
+            INNER JOIN albums ON awards.album_id=albums.album_id";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $records = $stmt->fetchAll();
+    return $records;
 }
-
+function displayAwards(){
+    $records = getAwards();
+    echo ' <table class="table table-striped table table-inverse">
+    <thead align = "left">
+      <tr>
+      <th>Awards</th>
+        <th>Name</th>
+        <th>Genre</th>
+        <th>Album</th>
+        <th>Year</th>
+      </tr>
+    </thead>
+    <tbody>';
+    foreach($records as $record){
+      echo '<tr>';
+      echo  "<td>" .$record["award_title"]. "<td>" . $record["name"] . "<td>" . $record["genre"] . "<td>" . $record["title"] . "<td>" . $record["year"];
+      echo '</tr>';
+    }
+    echo '</tbody>';
+    echo '</table>';
+}
 
 function displayAlbums(){
     $records = getAlbums();
@@ -142,6 +170,7 @@ function displayAverage(){
         <div id = "content">
             <?=displayAverage()?>
             <?=displayAlbums()?>
+            <?=displayAwards()?>
         </div>
     </body>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
