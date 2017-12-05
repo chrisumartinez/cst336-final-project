@@ -5,15 +5,21 @@ function randomize(){
     var type = "GET";
     var datatype = "html";
     
-    // //use ajax call with jquery;
-    // $.ajax(
-    //     type: type,
-    //     url: url,
-    //     success: function(){
-    //         //finsh randomize function here:
-            
-            
-    //     })
+    var ajax;
+    ajax = new XMLHttpRequest();
+    ajax.open("GET", url, true);
+    ajax.send();
+    ajax.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+        // alert(ajax.responseText);  //displays value retrieved from PHP program
+        $("#frontPageBody").empty();
+         var data = JSON.parse(ajax.responseText);
+         var div = document.getElementById("frontPageBody");
+         div.innerHTML += "Artist: " + data["name"] + "<br>";
+         div.innerHTML += "Title: " + data["title"] + "<br>";
+         div.innerHTML += "genre: "  + data["genre"];
+       }
+     }
 }
 
 function showAverage(){
