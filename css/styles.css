@@ -55,6 +55,13 @@ h1{
     text-align: center;
 }
 
-#pass, #generateReport{
+#pass, #generateReport, #frontPageBody, #frontPageTitle, #frontPageButton{
+    text-align: center;
+}
+
+#average,#awards,#albums{
+    display:none;
+}
+#ButtonForms{
     text-align: center;
 }

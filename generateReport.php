@@ -150,26 +150,28 @@ function displayAverage(){
 
     <body>
         <h1>Generate Reports:</h1>
-        <div id = "generateReport">
-            <form method = "post">
+        </div>
+        <div id = "ButtonForms">
             Generate Form: Average Artist In each Genre:
+            <button onclick="showAverage()">Show Average Artist</button>
             <br>
-            <input type = "submit" name = "average" value = "submit"/>
-            <br>
-            Genrate Form: Albums before 2000
-            <br>
-            <input type = "submit" name = "2000" value = "submit" />
+             Genrate Form: Albums before 2000
+            <button onclick="showAlbums()">Show Albums before 2000</button>
             <br>
             Generate Form: Award List Sheet
+            <button onclick = "showAwards()">Show Awards</button>
             <br>
-            <input type  = "submit" name = "awards" value = "submit" />
-            <br>
-        </form>
         </div>
+        <div id = "average" >
 
-        <div id = "content">
             <?=displayAverage()?>
+        </div>
+        <div id = "albums" >
+  
             <?=displayAlbums()?>
+        </div>
+        <div id = "awards" >
+
             <?=displayAwards()?>
         </div>
     </body>
@@ -177,4 +179,5 @@ function displayAverage(){
 <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+<script text = "javascript" src = "/js/util.js"></script>
 </html>
