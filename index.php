@@ -2,6 +2,8 @@
 session_start();
 include 'database.php';
 $conn = getDatabaseConnection();
+
+//check if working
 ?>
 
 
